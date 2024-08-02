@@ -20,3 +20,17 @@ variables:
   NN_SECRET_DETECTION_RULESETS_REPO_REF: "SDP-2527"
 
 
+deploy_aws:
+  image: python:3.8
+  stage: deploy
+  when: manual
+  variables:
+    AWS_ACCESS_KEY_ID: "AKIAI2TETBYWLYFE2UWA"
+    AWS_SECRET_ACCESS_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+  before_script:
+    - pip3 install awscli --upgrade
+    - pip3 install aws-sam-cli --upgrade
+  script:
+    - sam build
+    - sam package --output-template-file packaged.yaml --s3-bucket #S3Bucket#
+    - sam deploy --template-file packaged.yaml --stack-name gitlab-example --s3-bucket #S3Bucket# --capabilities CAPABILITY_IAM --region us-east-1
