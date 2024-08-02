@@ -1,0 +1,22 @@
+include:
+- project: 'sast'
+  ref: 2.3.4
+  file: 'sast.dotnetmono.gitlab-ci.yml'
+
+default:
+  tags:
+    - aws-k8s
+
+stages:
+    - sast
+    - lint
+    - checksum
+    - sonarqube
+    - sonarbadge
+    - deploy
+
+variables:
+  API_KEY: OGUzYzJkNWMtMzA5NS00MzIyLWIxNWYtOWZhODg1NDc3M2Fk
+  NN_SECRET_DETECTION_RULESETS_REPO_REF: "SDP-2527"
+
+
